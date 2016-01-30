@@ -16,8 +16,6 @@ import Story from '../components/story';
 import EditMoment from '../components/editMoment';
 
 var REQUEST_URL = 'http://127.0.0.1:3000/api/stories';
-var CLIENT_KEY = 'putthelimeinthecoconut';
-var CLIENT_SECRET = 'iwanttobuytheworldacoke';
 
 //router for the app
 class EpiLogApp extends Component {
