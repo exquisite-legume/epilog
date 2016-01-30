@@ -24,6 +24,7 @@ class EpiLogApp extends Component {
     this.fetchStories();
   }
 
+  // this coud be a thunk
   fetchStories() {
     const { storiesActions } = this.props;
 
@@ -41,16 +42,17 @@ class EpiLogApp extends Component {
   }
 
   render() {
+    // Be explicit about what is availible as props
     const { 
       viewControlState, 
       viewControlActions, 
       storiesState,
     } = this.props;
-    console.log("Routing to: ", viewControlState.currentView);
 
     switch (viewControlState.currentView) {
       case "HOME":
         return <Home />;
+
       case "LIBRARY":
         return (
           <Library
@@ -63,12 +65,14 @@ class EpiLogApp extends Component {
             }}
             />
           );
+
       case "STORY":
         return (
           <Story
           asset={viewControlState.passedProps.asset}
           onBack={()=>{viewControlActions.setView('LIBRARY')}}
           />);
+
       case "CAPTURE":
         return (
           <Capture
@@ -80,11 +84,13 @@ class EpiLogApp extends Component {
             }}
           />
         );
+
       case "EDIT_MOMENT":
         return(<EditMoment
           asset={viewControlState.passedProps.asset}
           onCancel={()=>{viewControlActions.setView('CAPTURE')}}
           />);
+        
       default:
         return <Home />;
     }
