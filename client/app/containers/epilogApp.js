@@ -23,6 +23,9 @@ import LogOut from '../components/logOut';
 //import LogInFail from '../components/logInFail';
 //router for the app
 class EpiLogApp extends Component {
+  componentDidMount(){
+    this.props.storiesActions.fetchStories();
+  }
 
   render() {
     // Be explicit about what is available as props
@@ -33,7 +36,6 @@ class EpiLogApp extends Component {
       storiesActions,
       authState,
       authActions,
-
     } = this.props;
 
     switch (viewControlState.currentView) {
@@ -107,7 +109,6 @@ class EpiLogApp extends Component {
               if (redirect === 'HOME') {
                 viewControlActions.setView('HOME', {});
               }
-
               viewControlActions.setView('NEW_STORY', { asset: asset });
             }
           }
@@ -122,7 +123,6 @@ export default connect(state => ({
     viewControlState: state.viewControl,
     storiesState: state.stories,
     authState: state.authControl,
-    Urls:state.Urls, // where the various url's are
   }),
   (dispatch) => ({
     viewControlActions: bindActionCreators(actions.viewControlActions, dispatch),
