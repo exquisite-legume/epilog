@@ -36,8 +36,6 @@ class EpiLogApp extends Component {
       storiesActions,
       authState,
       authActions,
-      momentViewActions,
-      momentViewState,
     } = this.props;
 
     switch (viewControlState.currentView) {
@@ -85,7 +83,6 @@ class EpiLogApp extends Component {
           <Story
           asset={viewControlState.passedProps.asset}
           onBack={ () => { viewControlActions.setView('LIBRARY') }}
-          onPress={(moment) => viewControlActions.setView('MOMENT_VIEW', {moment: moment})}
           />);
       case "NEW_STORY":
         return (
@@ -126,14 +123,12 @@ export default connect(state => ({
     viewControlState: state.viewControl,
     storiesState: state.stories,
     authState: state.authControl,
-    momentViewState: state.momentViewControl,
   }),
   (dispatch) => ({
     viewControlActions: bindActionCreators(actions.viewControlActions, dispatch),
     storiesActions: bindActionCreators(actions.storiesActions, dispatch),
     authActions: bindActionCreators(actions.authActions, dispatch),
     thunkFetch: bindActionCreators(actions.thunkFetch, dispatch),
-    momentViewActions: bindActionCreators(actions.momentViewControlActions, dispatch),
   })
 )(EpiLogApp);
 
