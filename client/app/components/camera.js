@@ -14,12 +14,31 @@ var {
     TouchableHighlight,
 } = React;
 
+import CameraViewOptions from './cameraViewOptions';
+
 var CameraView = React.createClass({
+
 
     getInitialState: function() {
         return {
             cameraType: Camera.constants.Type.back
         }
+    },
+
+    _switchCamera: function() {
+      //console.log('flip')
+        var state = this.state;
+        state.cameraType = state.cameraType === Camera.constants.Type.back ? Camera.constants.Type.front : Camera.constants.Type.back;
+        this.setState(state);
+    },
+
+    _takePicture: function() {
+      const { onTakePicture } = this.props;
+      //console.log('take')
+        this.refs.cam.capture(function(err, data) {
+            onTakePicture();
+            console.log(err, data);
+        });
     },
 
     getRecentPhoto: function(){CameraRoll.getPhotos({first: 1}, this._appendAssets, logError)},
@@ -38,24 +57,11 @@ var CameraView = React.createClass({
                         <Text style={styles.buttonText}>Take</Text>
                     </TouchableHighlight>
                 </View>
+                <View>
+                  <CameraViewOptions />
+                </View>
             </Camera>
         );
-    },
-
-    _switchCamera: function() {
-      //console.log('flip')
-        var state = this.state;
-        state.cameraType = state.cameraType === Camera.constants.Type.back ? Camera.constants.Type.front : Camera.constants.Type.back;
-        this.setState(state);
-    },
-
-    _takePicture: function() {
-      const { onTakePicture } = this.props;
-      //console.log('take')
-        this.refs.cam.capture(function(err, data) {
-            onTakePicture();
-            console.log(err, data);
-        });
     }
 
 });
@@ -83,7 +89,11 @@ var styles = StyleSheet.create({
     },
     buttonText: {
         color: "#FFFFFF"
-    }
+    },
+    options: {
+      flex: 1,
+      alignItems: 'center',
+    },
 });
 
 module.exports = CameraView;

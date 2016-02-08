@@ -62,7 +62,7 @@ class EpiLogApp extends Component {
           <CameraView
           onTakePicture={ () => {viewControlActions.setView('CAPTURE')}}
           />
-          );
+          );  
       case "HOME":
         return (
           <Home

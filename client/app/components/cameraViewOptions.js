@@ -9,25 +9,26 @@ import React, {
 } from 'react-native';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-
 import * as viewControlActions from '../actions/viewControlActions';
 
-class NavBar extends Component {
+class CameraViewOptions extends Component {
   render() {
     const { currentView, viewActions } = this.props;
     return (
       <View style={styles.container}>
-        <TouchableHighlight onPress={()=> viewActions.setView("HOME")}underlayColor="orange">
+        <TouchableHighlight style={styles.test} onPress={()=> {viewActions.setView("CAPTURE")}} underlayStyle ={{backgroundColor: 'orange'}}>
           <Text style={styles.navOption}>
-          Home
+          Gallery
           </Text>
         </TouchableHighlight>
-        <TouchableHighlight onPress={()=> viewActions.setView("CAMERAVIEW")}underlayColor="orange">
-          <Image style={styles.icon} source={require('../image/CameraIcon.png')}/>
-        </TouchableHighlight>
-        <TouchableHighlight onPress={()=> viewActions.setView("LIBRARY")}underlayColor="orange">
+        <TouchableHighlight style={styles.test} onPress={()=> viewActions.setView("LIBRARY")} underlayStyle={{backgroundColor: 'orange'}}>
           <Text style={styles.navOption}>
-          Library
+          Photo
+          </Text>
+        </TouchableHighlight> 
+        <TouchableHighlight style={styles.test} onPress={()=> viewActions.setView("HOME")} underlayStyle ={{backgroundColor: 'orange'}}>
+          <Text style={styles.navOption}>
+          Video
           </Text>
         </TouchableHighlight>
       </View>
@@ -36,6 +37,9 @@ class NavBar extends Component {
 }
 
 var styles = StyleSheet.create({
+  test: {
+    backgroundColor: 'white',
+  },
   container: {
     flex: 1,
     flexDirection: 'row',
@@ -61,5 +65,4 @@ export default connect(state => ({
 }),
 (dispatch) => ({
   viewActions: bindActionCreators(viewControlActions, dispatch )
-}))(NavBar);
-
+}))(CameraViewOptions);

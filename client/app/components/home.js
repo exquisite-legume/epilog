@@ -37,20 +37,13 @@ class Home extends Component {
           </View>
         </RecyclerViewBackedScrollView>
           </View>
-        <TouchableHighlight
-          style={styles.navBar}
-          onPress={onCamera}>
-            <Image
-              style={styles.icon}
-              source={require('../image/CameraIcon.png')}/>
-        </TouchableHighlight>
-        <TouchableHighlight
-          style={styles.navBar}
-          onPress={onLogOut}>
-          <View style={styles.button}>
-            <Text style={styles.buttonText}>Log Out</Text>
-          </View>
-        </TouchableHighlight>
+          <TouchableHighlight
+            style={styles.navBar}
+            onPress={onLogOut}>
+            <View style={styles.button}>
+              <Text style={styles.buttonText}>Log Out</Text>
+            </View>
+          </TouchableHighlight>
         </View>
         <View style={styles.navBar}>
           <NavBar />
