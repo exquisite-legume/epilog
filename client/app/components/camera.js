@@ -14,15 +14,22 @@ var {
     TouchableHighlight,
 } = React;
 
-import CameraViewOptions from './cameraViewOptions';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import * as viewControlActions from '../actions/viewControlActions';
 
 var CameraView = React.createClass({
+
 
 
     getInitialState: function() {
         return {
             cameraType: Camera.constants.Type.back
         }
+    },
+
+    _goToGallery: function() {
+       const { onGoToGallery } = this.props;
     },
 
     _switchCamera: function() {
@@ -41,6 +48,7 @@ var CameraView = React.createClass({
         });
     },
 
+
     getRecentPhoto: function(){CameraRoll.getPhotos({first: 1}, this._appendAssets, logError)},
 
     render: function() {
@@ -49,16 +57,23 @@ var CameraView = React.createClass({
                 ref="cam"
                 style={styles.container}
                 type={this.state.cameraType}>
-                <View style={styles.buttonBar}>
-                    <TouchableHighlight style={styles.button} onPress={this._switchCamera}>
-                        <Text style={styles.buttonText}>Flip</Text>
-                    </TouchableHighlight>
-                    <TouchableHighlight style={styles.button} onPress={this._takePicture}>
-                        <Text style={styles.buttonText}>Take</Text>
-                    </TouchableHighlight>
-                </View>
-                <View>
-                  <CameraViewOptions />
+                <View style={styles.positionBox}></View>
+                <View style={styles.options}>
+                  <TouchableHighlight onPress={this._goToGallery} underlayStyle ={{backgroundColor: 'orange'}}>
+                    <Text style={styles.optionText}>
+                    Gallery
+                    </Text>
+                  </TouchableHighlight>
+                  <TouchableHighlight onPress={this._takePicture} underlayStyle ={{backgroundColor: 'orange'}}>
+                    <Text style={styles.takeText}>
+                    Take
+                    </Text>
+                  </TouchableHighlight>
+                  <TouchableHighlight onPress={this._switchCamera} underlayStyle ={{backgroundColor: 'orange'}}>
+                    <Text style={styles.optionText}>
+                    Flip
+                    </Text>
+                  </TouchableHighlight>
                 </View>
             </Camera>
         );
@@ -67,33 +82,36 @@ var CameraView = React.createClass({
 });
 
 var styles = StyleSheet.create({
+    positionBox: {
+      flex: 13
+    },
     container: {
         flex: 1,
-        justifyContent: "center",
-        alignItems: "center",
+        flexDirection: "column",
+        alignItems: "stretch",
         backgroundColor: "transparent",
     },
-    buttonBar: {
-        flexDirection: "row",
-        position: "absolute",
-        bottom: 25,
-        right: 0,
-        left: 0,
-        justifyContent: "center"
-    },
-    button: {
-        padding: 10,
-        borderWidth: 1,
-        borderColor: "#FFFFFF",
-        margin: 5
-    },
-    buttonText: {
-        color: "#FFFFFF"
-    },
     options: {
-      flex: 1,
-      alignItems: 'center',
+        flex: 1,
+        flexDirection: 'row',
+        justifyContent: 'space-around',
+        alignItems: "center",
+        backgroundColor: 'white'
     },
+    optionText: {
+        textAlign: "center",
+        fontWeight:'bold',
+        fontSize: 20,
+        color: ' grey',
+        width: 135,
+    },
+    takeText: {
+        textAlign: "center",
+        fontWeight:'bold',
+        fontSize: 20,
+        color: 'orange',
+        width: 135,
+    }
 });
 
 module.exports = CameraView;
