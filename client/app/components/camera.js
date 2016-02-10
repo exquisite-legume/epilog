@@ -14,7 +14,13 @@ var {
     TouchableHighlight,
 } = React;
 
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import * as viewControlActions from '../actions/viewControlActions';
+
 var CameraView = React.createClass({
+
+
 
     getInitialState: function() {
         return {
@@ -22,24 +28,9 @@ var CameraView = React.createClass({
         }
     },
 
-    getRecentPhoto: function(){CameraRoll.getPhotos({first: 1}, this._appendAssets, logError)},
-
-    render: function() {
-        return (
-            <Camera
-                ref="cam"
-                style={styles.container}
-                type={this.state.cameraType}>
-                <View style={styles.buttonBar}>
-                    <TouchableHighlight style={styles.button} onPress={this._switchCamera}>
-                        <Text style={styles.buttonText}>Flip</Text>
-                    </TouchableHighlight>
-                    <TouchableHighlight style={styles.button} onPress={this._takePicture}>
-                        <Text style={styles.buttonText}>Take</Text>
-                    </TouchableHighlight>
-                </View>
-            </Camera>
-        );
+    _goToGallery: function() {
+       const { onGoToGallery } = this.props;
+       onGoToGallery();
     },
 
     _switchCamera: function() {
@@ -56,33 +47,72 @@ var CameraView = React.createClass({
             onTakePicture();
             console.log(err, data);
         });
+    },
+
+
+    getRecentPhoto: function(){CameraRoll.getPhotos({first: 1}, this._appendAssets, logError)},
+
+    render: function() {
+        return (
+            <Camera
+                ref="cam"
+                style={styles.container}
+                type={this.state.cameraType}>
+                <View style={styles.positionBox}></View>
+                <View style={styles.options}>
+                  <TouchableHighlight onPress={this._goToGallery}>
+                    <Text style={styles.optionText}>
+                    Gallery
+                    </Text>
+                  </TouchableHighlight>
+                  <TouchableHighlight onPress={this._takePicture}>
+                    <Text style={styles.takeText}>
+                    Take
+                    </Text>
+                  </TouchableHighlight>
+                  <TouchableHighlight onPress={this._switchCamera}>
+                    <Text style={styles.optionText}>
+                    Flip
+                    </Text>
+                  </TouchableHighlight>
+                </View>
+            </Camera>
+        );
     }
 
 });
 
 var styles = StyleSheet.create({
+    positionBox: {
+      flex: 13
+    },
     container: {
         flex: 1,
-        justifyContent: "center",
-        alignItems: "center",
+        flexDirection: "column",
+        alignItems: "stretch",
         backgroundColor: "transparent",
     },
-    buttonBar: {
-        flexDirection: "row",
-        position: "absolute",
-        bottom: 25,
-        right: 0,
-        left: 0,
-        justifyContent: "center"
+    options: {
+        flex: 1,
+        flexDirection: 'row',
+        justifyContent: 'space-around',
+        alignItems: "center",
+        backgroundColor: 'white'
     },
-    button: {
-        padding: 10,
-        borderWidth: 1,
-        borderColor: "#FFFFFF",
-        margin: 5
+    optionText: {
+        textAlign: "center",
+        fontWeight:'bold',
+        fontSize: 20,
+        color: ' grey',
+        width: 135,
+        backgroundColor: 'white'
     },
-    buttonText: {
-        color: "#FFFFFF"
+    takeText: {
+        textAlign: "center",
+        fontWeight:'bold',
+        fontSize: 20,
+        color: 'orange',
+        width: 135,
     }
 });
 

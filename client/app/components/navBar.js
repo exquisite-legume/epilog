@@ -3,6 +3,7 @@ import React, {
   Component,
   StyleSheet,
   Text,
+  Image, 
   View,
   TouchableHighlight
 } from 'react-native';
@@ -21,10 +22,8 @@ class NavBar extends Component {
           Home
           </Text>
         </TouchableHighlight>
-        <TouchableHighlight onPress={()=> viewActions.setView("CAPTURE")}underlayColor="orange">
-          <Text style={styles.navOption}>
-          Capture
-          </Text>
+        <TouchableHighlight onPress={()=> viewActions.setView("CAMERAVIEW")}underlayColor="orange">
+          <Image style={styles.icon} source={require('../image/CameraIcon.png')}/>
         </TouchableHighlight>
         <TouchableHighlight onPress={()=> viewActions.setView("LIBRARY")}underlayColor="orange">
           <Text style={styles.navOption}>
@@ -51,6 +50,10 @@ var styles = StyleSheet.create({
     color: ' grey',
     width: 135,
   },
+  icon: {
+    width: 50,
+    height: 50,
+  }
 });
 
 export default connect(state => ({
