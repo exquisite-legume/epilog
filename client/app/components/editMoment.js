@@ -187,21 +187,26 @@ var EditMoment = React.createClass({
 
     return (
       <View style={styles.container}>
+
         <View style={styles.imageContainer}>
           <Image source={image} style={styles.imageWide}/>
         </View>
-        <View style={styles.content}>
+
+        <View style={styles.storyTitleContainer}>
           <AutoCompleteHelper
             placeholder="Story Title" 
             data={this.state.arrayOfStoryTitles} 
             onBlur={this.getStoryTags}
           />
         </View>
+
         <View style={ styles.textContainer }>
           <TextInput style={styles.textInput} placeholder='Create a Caption'
             onChangeText={(text)=>textFields.caption = text}/>
           <TextInput style={styles.textInput} placeholder='Tag your moment'
             onChangeText={(text)=>textFields.momentTags = text}/>
+        </View> 
+
         <View style={styles.buttonContainer}>
           <TouchableHighlight onPress={onCancel}>
             <View><Text style={styles.button}>Cancel</Text></View>
@@ -217,8 +222,8 @@ var EditMoment = React.createClass({
           }>
             <View><Text style={styles.button}>Submit</Text></View>
           </TouchableHighlight>
-        </View>
-        </View>        
+        </View> 
+
       </View>
     );
   }
@@ -244,19 +249,19 @@ var styles = StyleSheet.create({
     flexDirection: 'column',
   },
   textContainer: {
-    marginBottom: 20,
-    flex: 0.3
+    flex: 0.2,
+    marginLeft: 45,
+    marginRight: 45,
   },
   textInput: {
     flexWrap: 'wrap',
     alignSelf: 'center',
+    flex: 0.1, 
     height: 5,
-    width: 350,
+    width: 320, 
     marginTop: 10,
-    marginBottom: 10,
-    borderRadius: 2,   
+    borderRadius: 2,  
     backgroundColor: '#FFFFFF',
-    flex: 1,
     textAlign: 'center'
   },
   imageWide: {
@@ -264,17 +269,18 @@ var styles = StyleSheet.create({
     height: 240,
     alignSelf: 'center'
   },
-  content: {
-    flex: 0.2,
-    justifyContent: 'space-around',
-    flexDirection: 'row',
+
+  storyTitleContainer: {
+    marginLeft: 45,
+    marginRight: 45,
   },
   imageContainer: {
-    flex: 1,
+    marginTop: 40, 
     justifyContent: 'space-around',
   },
   buttonContainer: {
-    flex: 1,
+    marginBottom: 15, 
+    flex: 0.2,
     justifyContent: 'space-around',
     alignSelf: 'stretch',
     flexDirection: 'row',

@@ -30,6 +30,7 @@ var CameraView = React.createClass({
 
     _goToGallery: function() {
        const { onGoToGallery } = this.props;
+       onGoToGallery();
     },
 
     _switchCamera: function() {
@@ -59,17 +60,17 @@ var CameraView = React.createClass({
                 type={this.state.cameraType}>
                 <View style={styles.positionBox}></View>
                 <View style={styles.options}>
-                  <TouchableHighlight onPress={this._goToGallery} underlayStyle ={{backgroundColor: 'orange'}}>
+                  <TouchableHighlight onPress={this._goToGallery}>
                     <Text style={styles.optionText}>
                     Gallery
                     </Text>
                   </TouchableHighlight>
-                  <TouchableHighlight onPress={this._takePicture} underlayStyle ={{backgroundColor: 'orange'}}>
+                  <TouchableHighlight onPress={this._takePicture}>
                     <Text style={styles.takeText}>
                     Take
                     </Text>
                   </TouchableHighlight>
-                  <TouchableHighlight onPress={this._switchCamera} underlayStyle ={{backgroundColor: 'orange'}}>
+                  <TouchableHighlight onPress={this._switchCamera}>
                     <Text style={styles.optionText}>
                     Flip
                     </Text>
@@ -104,6 +105,7 @@ var styles = StyleSheet.create({
         fontSize: 20,
         color: ' grey',
         width: 135,
+        backgroundColor: 'white'
     },
     takeText: {
         textAlign: "center",

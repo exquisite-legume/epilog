@@ -25,14 +25,17 @@ var Story = React.createClass({
 
     //define variables that will ultimately give us access to the story's moments and tags
     var moments = story.moments;
+    // console.log("moments-->", moments);
     var checkTags = moments.filter(function(tag){
       if (tag['tags']){
         return tag;
       }
     });
     var tagObjsByMoment = checkTags.map(function(momentObj){if (momentObj){console.log(momentObj);return momentObj['tags']}});
+    // console.log("tagObjsByMoment -->", tagObjsByMoment);
     var arrayOfTagObjectsForStory = tagObjsByMoment.reduce(function(aggregator,arrOfTags){return aggregator.concat(arrOfTags);}, []);
     var arrayOfTagNames = arrayOfTagObjectsForStory.map(function(tagObj){return tagObj['name'];});
+    // console.log("arrayOfTagNames -->", arrayOfTagNames);
     //set the variables defined above to the view's state
     return {
       //holds all of the story titles associated with a particular user
@@ -60,10 +63,14 @@ var Story = React.createClass({
     } else {
       var copyOfMoments = this.state.moments.slice(0);
       var filtered = copyOfMoments.filter(function(moment){
-        var momentTagNames = moment['tags'].map(function(tagObj){
-          return tagObj.name;
-        });
-        return momentTagNames.indexOf(tagToFilterBy) > -1;
+        if(moment['tags']){
+          var momentTagNames = moment['tags'].map(function(tagObj){
+            return tagObj.name;
+          });
+          return momentTagNames.indexOf(tagToFilterBy) > -1;
+        } else {
+          return false; 
+        }
       })
       this.setState({filteredMoments : filtered});
     }
@@ -77,41 +84,45 @@ var Story = React.createClass({
     const story = this.props.asset;
     console.log('story view', story)
     return (
-      <View style={styles.container}>
+      <View style={{position: 'relative'}}>
+        <View style={styles.container}>
         <View style={styles.scrollViewContainer}>
-          <AutoCompleteHelper
-            placeholder="Filter by Tag"
-            data = {this.state.arrayOfTagNames}
-            onFocus = {this.unfilterMoments}
-            onBlur = {this.filterMoments}
-          />
           <ScrollView
               style={styles.scrollView}
               showsVerticalScrollIndicator={true}
               automaticallyAdjustContentInsets={false}
               horizontal={false}
               snapToInterval={height/2}
-              snapToAlignment={'start'}>
+              snapToAlignment={'end'}>
               {this.state.filteredMoments.map(this.createRow)}
           </ScrollView>
         </View>
-        <View style={styles.row}>
+          <View style={styles.row}>
           <TouchableHighlight
-            key={this.state.story}
-            onPress={onBack}
-            onShowUnderlay={this.onHighlight}
-            onHideUnderlay={this.onUnhighlight}>
-            <View style={styles.row}><Text style={styles.buttonText}>Back</Text></View>
+              key={this.state.story}
+              onPress={onBack}
+              onShowUnderlay={this.onHighlight}
+              onHideUnderlay={this.onUnhighlight}>
+              <View style={styles.row}><Text style={styles.buttonText}>Back</Text></View>
           </TouchableHighlight>
+          </View>
         </View>
-      </View>
+        <View style={styles.test}>
+          <AutoCompleteHelper
+            placeholder="Filter by Tag"
+            data = {this.state.arrayOfTagNames}
+            onFocus = {this.unfilterMoments}
+            onBlur = {this.filterMoments}
+          />
+        </View>
+      </View> 
     );
   },
 
   createRow: function(moment) {
     console.log('moment',moment)
     return (
-      <View key={moment.id} style={styles.container}>
+      <View key={moment.id} style={styles.storyRow}>
         <View style={styles.storyContainer}>
           <TouchableHighlight onPress={()=>this.props.onPress(moment)}>
             <Image
@@ -136,8 +147,17 @@ var Story = React.createClass({
 });
 
 var styles = StyleSheet.create({
+  storyRow: {
+    flex:1
+  },
+  test: {
+    position: 'absolute',
+    top: -14, // controls top position of autocomplete
+    height: 30,
+    width: 450,
+  },
   timeLine: {
-    flex:1,
+    // flex:1,
     alignSelf:'center',
     width:2,
     height: 100
@@ -149,6 +169,9 @@ var styles = StyleSheet.create({
   },
   container: {
     flex: 1,
+    height: Dimensions.get('window').height,
+    width: Dimensions.get('window').width,
+    position: 'absolute'
   },
   scrollViewContainer: {
     flex: 11,
@@ -159,7 +182,7 @@ var styles = StyleSheet.create({
   thumbnail: {
     flex: 1,
     width: Math.floor(Dimensions.get('window').width/3),
-    height:Math.floor(Dimensions.get('window').height/4),
+    height: Math.floor(Dimensions.get('window').height/4),
     alignSelf: 'center',
   },
   headline: {
@@ -178,7 +201,7 @@ var styles = StyleSheet.create({
   row: {
     flex: 1,
     justifyContent: 'center',
-    backgroundColor: 'black'
+    backgroundColor: 'black',
   },
   backdrop: {
     paddingTop: 100,
