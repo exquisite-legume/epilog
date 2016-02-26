@@ -2,7 +2,7 @@ var userModel = require('./userModel');
 var Promise = require('bluebird');
 
 module.exports =  {
-  
+
   //mvp for now...
   add: function (req, res){
     var userData = {
@@ -10,7 +10,7 @@ module.exports =  {
       last_name: req.body.last_name,
       email: req.body.email,
       token: req.body.token,
-      password: req.body.password 
+      password: req.body.password
     };
 
     userModel.add(userData)
@@ -33,6 +33,9 @@ module.exports =  {
     })
       .then(function (mapped) {
         res.status(201).json(mapped);
+      })
+      .catch(function (error){
+        res.status(404).json();
       });
   },
 
@@ -42,5 +45,5 @@ module.exports =  {
   },
   removeFriend: function (req, res){
   },
-  
+
 };

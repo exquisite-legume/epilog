@@ -15,6 +15,7 @@
 1. [Development](#development)
     1. [Installing Dependencies](#installing-dependencies)
     1. [Tasks](#tasks)
+    1. [API api Endpoints](#api)
 1. [Team](#team)
 1. [Contributing](#contributing)
 
@@ -26,7 +27,7 @@
 - __Press the Register button__
 
 ### Capturing a Moment
-Our application allows you to capture precious moments as they happen. 
+Our application allows you to capture precious moments as they happen.
 - __Press the Camera icon__
 - __Take a picture with the Capture button__
 - __Press the Gallery button to go to your camera roll__
@@ -52,7 +53,7 @@ Momento allows you to leave comments on any moment you’ve captured. These comm
 - __Press the Back button to return to your Home view__
 
 ### Reliving your Memories
-Each story you’ve created as well as all the moments that belong to them are available in the Library View. 
+Each story you’ve created as well as all the moments that belong to them are available in the Library View.
 - __Press the Library button on the bottom nav bar__
 - __Press any story you want to look through__
 - __You can type a tag in the top search bar to view specific moments__
@@ -137,13 +138,27 @@ For photo uploading functionality:
   - __Click Create__
   - __Paste the contents of RCTFileTransfer.m from the nativeModules into the new file__
 
-For autocomplete functionality: 
+For autocomplete functionality:
 - __Once you have installed react-native-autocomplete into /client, open XCode__
 - __Go to the file structure view on the left side__
 - __Right click on Libraries, select Add files to "..." and select node_modules/react-native-autocomplete/RCTAutoComplete.xcodeproj__
 - __Select your project and under Build Phases -> Link Binary With Libraries, press the + and select libRCTAutoComplete.a__
 
+For camera functionality:
 
+- __`npm install react-native-camera@https://github.com/lwansbrough/react-native-camera.git --save`__
+- __In XCode, in the project navigator, right click `Libraries` ➜ `Add Files to [your project's name]`__
+- __Go to `node_modules` ➜ `react-native-camera` and add `RCTCamera.xcodeproj`__
+- __In XCode, in the project navigator, select your project. Add libRCTCamera.a to your project's Build Phases ➜ Link Binary With Libraries__
+- Click RCTCamera.xcodeproj in the project navigator and go the Build Settings tab. Make sure 'All' is toggled on (instead of 'Basic'). In the Search Paths section, look for Header Search Paths and make sure it contains both $(SRCROOT)/../../react-native/React and $(SRCROOT)/../../../React - mark both as recursive.__
+
+### API Endpoints
+![alt tag](API%20endpoint/Slide1.png)
+![alt tag](API%20endpoint/Slide2.png)
+![alt tag](API%20endpoint/Slide3.png)
+![alt tag](API%20endpoint/Slide4.png)
+![alt tag](API%20endpoint/Slide5.png)
+![alt tag](API%20endpoint/Slide6.png)
 ## Contributing
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) for contribution guidelines.
